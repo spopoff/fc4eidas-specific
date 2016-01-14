@@ -347,6 +347,7 @@ public final class SpecificEidasNode implements IAUService, ITranslatorService {
    /**
     * {@inheritDoc}
     */
+   @Override
    public IPersonalAttributeList
       deriveAttributeFrom(final IPersonalAttributeList personalList) {
 
@@ -395,6 +396,7 @@ public final class SpecificEidasNode implements IAUService, ITranslatorService {
    /**
     * {@inheritDoc}
     */
+   @Override
    public IPersonalAttributeList
       deriveAttributeTo(final IEIDASSession session,
          final IPersonalAttributeList modifiedList) {
