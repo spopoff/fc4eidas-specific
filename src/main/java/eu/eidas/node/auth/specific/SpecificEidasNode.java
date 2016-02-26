@@ -486,6 +486,7 @@ public final class SpecificEidasNode implements IAUService, ITranslatorService {
    /**
     * {@inheritDoc}
     */
+   @Override
    public EIDASAuthnResponse
       processAuthenticationResponse(final byte[] samlToken,
          final IEIDASSession session) {
