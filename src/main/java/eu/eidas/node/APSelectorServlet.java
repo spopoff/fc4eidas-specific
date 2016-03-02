@@ -105,14 +105,14 @@ public final class APSelectorServlet extends AbstractSpecificServlet {
 
 
       if (strAttrList != null) {
-        LOG.trace("Setting AttributeList...");
+        LOG.debug("Setting AttributeList...");
         attrList = new PersonalAttributeList();
         attrList.populate(strAttrList);
         validateAttrList(controllerService, attrList);
       }
 
       if (controllerService.getNumberOfAps() > 0 && !checkAttributes(attrList)) {
-        LOG.trace("Build parameter list");
+        LOG.debug("Build parameter list");
 
         final String username =
                 (String) controllerService.getSession().get(EIDASParameters.USERNAME.toString());
@@ -122,9 +122,10 @@ public final class APSelectorServlet extends AbstractSpecificServlet {
                 username);
         parameters.put(EIDASParameters.USERNAME.toString(), username);
         request.setAttribute(EIDASParameters.USERNAME.toString(), username);
+        LOG.debug("Build username="+username);
 
         if (controllerService.isExternalAP()) {
-          LOG.trace("External AP configured");
+          LOG.debug("External AP configured");
           request.setAttribute(SpecificParameterNames.CALLBACK_URL.toString(),encodeURL(controllerService.getCallbackURL(), request, response));
           final boolean retVal =
                   controllerService.getSpecificEidasNode().prepareAPRedirect(
@@ -136,7 +137,7 @@ public final class APSelectorServlet extends AbstractSpecificServlet {
             request.setAttribute(EIDASParameters.AP_URL.toString(),
                     controllerService.getSession().get(EIDASParameters.AP_URL.toString()));
             request.setAttribute(SpecificParameterNames.STR_ATTR_LIST.toString(), attrList.toString());
-            LOG.trace("[execute] external-ap");
+            LOG.debug("[execute] external-ap");
 
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(response.encodeURL
                     (SpecificViewNames.AP_REDIRECT.toString()));
@@ -164,7 +165,7 @@ public final class APSelectorServlet extends AbstractSpecificServlet {
               && controllerService.isSigModuleExists()) {
         final PersonalAttribute attr = authReq.getPersonalAttributeList().get(controllerService.getAttribute());
         if (!attr.isEmptyValue()) {
-          LOG.trace("[execute] external-sig-module");
+          LOG.debug("[execute] external-sig-module");
           final String signedDocValue = attr.getValue().get(0);
           request.setAttribute(SpecificParameterNames.DATA.toString(),signedDocValue);
           attrList.put(attr.getName(), attr);
